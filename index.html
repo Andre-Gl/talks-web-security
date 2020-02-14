@@ -107,27 +107,21 @@
           </div>
           <div class="column70">
             <pre><code data-trim class="hljs">
-              class SimpleTextInput extends React.Component {
-                state = {
-                  text: "Hello world!"
-                };
-
-                handleChange(e) {
-                  this.setState({ text: e.target.value });
-                }
-
-                render() {
-                  return (
-                    <div>
-                      <input
+              function SimpleTextInput() {
+                const [text, setText] = React.useState('Welcome!');
+          
+                return (
+                  &lt;div&gt;
+                      &lt;input
                         type="text"
-                        onChange={this.handleChange.bind(this)}
-                      />
-                      <p>{this.state.text}</p>
-                    </div>
-                  );
-                }
-              };
+                        onChange={e =&gt;
+                          setText(e.target.value)
+                        }
+                      /&gt;
+                      &lt;p&gt;{text}&lt;/p&gt;
+                    &lt;/div&gt;
+                );
+              }
             </code></pre>
           </div>
         </div>
@@ -140,29 +134,24 @@
           </div>
           <div class="column70">
             <pre><code data-trim class="hljs">
-              class RichTextInput extends React.Component {
-                state = {
-                  text: "Hello world!"
-                };
-
-                handleChange(e) {
-                  this.setState({ text: e.target.value });
-                }
-
-                render() {
-                  return (
-                    <div>
-                      <input
+              function RichTextInput() {
+                const [text, setText] = React.useState('Welcome!');
+          
+                return (
+                  &lt;div&gt;
+                      &lt;input
                         type="text"
-                        onChange={this.handleChange.bind(this)}
-                      />
-                      <p
-                        dangerouslySetInnerHTML={{__html: this.state.text}}
-                      ></p>
-                    </div>
-                  );
-                }
-              };
+                        onChange={e =&gt;
+                          setText(e.target.value)
+                        }
+                      /&gt;
+                      &lt;p
+                        dangerouslySetInnerHTML={
+                          {__html: text}
+                        }&gt;&lt;/p&gt;
+                    &lt;/div&gt;
+                );
+              }
             </code></pre>
           </div>
         </div>
@@ -202,31 +191,29 @@
           </div>
           <div class="column70">
             <pre><code data-trim class="hljs">
-              class LinksTextInput extends React.Component {
-                state = {links: []};
-
-                addLink(e) {
-                  this.setState({
-                    links: [...this.state.links, e.target.value]
-                  })
-                }
-
-                render() {
-                  return (
-                    <div>
-                      <input
-                        type="text"
-                        onChange={this.addLink.bind(this)}
-                      />
-                      <ul>
-                        {this.state.links.map(link =>
-                            <li><a href={link}>{link}</a></li>
-                        )}
-                      </ul>
-                    </div>
-                  );
-                }
-              };
+              function LinksTextInput() {
+                const [links, setLinks] = React.useState([]);
+          
+                return (
+                  &lt;div&gt;
+                    &lt;input
+                      type="text"
+                      onKeyPress={e =&gt; {
+                        if (e.key === 'Enter') {
+                          setLinks(
+                            [...links, e.target.value]
+                          );
+                        }
+                      }}
+                    /&gt;
+                    &lt;ul&gt;
+                      {links.map(link =&gt;
+                          &lt;li&gt;&lt;a href={link}&gt;{link}&lt;/a&gt;&lt;/li&gt;
+                      )}
+                    &lt;/ul&gt;
+                  &lt;/div&gt;
+                );
+              }
             </code></pre>
           </div>
         </div>
@@ -405,18 +392,11 @@
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   <!-- <script type="text/babel" src="./js/examples.js"></script> -->
   <script type="text/babel">
-    class SimpleTextInput extends React.Component {
-      state = {
-        text: "Hello world!"
-      };
+    function SimpleTextInput() {
+      const [text, setText] = React.useState('Welcome!');
 
-      handleChange(e) {
-        this.setState({ text: e.target.value });
-      }
-
-      render() {
-        return (
-          <div>
+      return (
+        <div>
             <input
               style={{
                 width: "100%",
@@ -424,13 +404,12 @@
                 padding: "10px"
               }}
               type="text"
-              onChange={this.handleChange.bind(this)}
+              onChange={e => setText(e.target.value)}
             />
-            <p>{this.state.text}</p>
+            <p>{text}</p>
           </div>
-        );
-      }
-    };
+      );
+    }
 
     ReactDOM.render(
         <SimpleTextInput />,
@@ -438,18 +417,11 @@
     );
   </script>
   <script type="text/babel">
-    class RichTextInput extends React.Component {
-      state = {
-        text: "Hello world!"
-      };
+    function RichTextInput() {
+      const [text, setText] = React.useState('Welcome!');
 
-      handleChange(e) {
-        this.setState({ text: e.target.value });
-      }
-
-      render() {
-        return (
-          <div>
+      return (
+        <div>
             <input
               style={{
                 width: "100%",
@@ -457,15 +429,12 @@
                 padding: "10px"
               }}
               type="text"
-              onChange={this.handleChange.bind(this)}
+              onChange={e => setText(e.target.value)}
             />
-            <p
-              dangerouslySetInnerHTML={{__html: this.state.text}}
-            ></p>
+            <p dangerouslySetInnerHTML={{__html: text}}></p>
           </div>
-        );
-      }
-    };
+      );
+    }
 
     ReactDOM.render(
         <RichTextInput />,
@@ -473,38 +442,34 @@
     );
   </script>
    <script type="text/babel">
-    class LinksTextInput extends React.Component {
-      state = {links: []};
+    function LinksTextInput() {
+      const [links, setLinks] = React.useState([]);
 
-      addLink(e) {
-        if (e.key === 'Enter') {
-          this.setState({
-            links: [...this.state.links, e.target.value]
-          });
-        }
-      }
-
-      render() {
-        return (
-          <div>
-            <input
-              style={{
-                width: "100%",
-                fontSize: "24px",
-                padding: "10px"
-              }}
-              type="text"
-              onKeyPress={this.addLink.bind(this)}
-            />
-            <ul>
-              {this.state.links.map(link =>
-                  <li><a href={link}>{link}</a></li>
-              )}
-            </ul>
-          </div>
-        );
-      }
-    };
+      return (
+        <div>
+          <input
+            style={{
+              width: "100%",
+              fontSize: "24px",
+              padding: "10px"
+            }}
+            type="text"
+            onKeyPress={e => {
+              if (e.key === 'Enter') {
+                setLinks(
+                  [...links, e.target.value]
+                );
+              }
+            }}
+          />
+          <ul>
+            {links.map(link =>
+                <li><a href={link}>{link}</a></li>
+            )}
+          </ul>
+        </div>
+      );
+    }
 
     ReactDOM.render(
         <LinksTextInput />,
