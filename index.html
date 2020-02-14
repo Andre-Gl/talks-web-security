@@ -1,0 +1,291 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+  <title>React Router</title>
+
+  <link rel="stylesheet" href="reveal.js/css/reset.css">
+  <link rel="stylesheet" href="reveal.js/css/reveal.css">
+  <link rel="stylesheet" href="reveal.js/css/theme/black.css">
+  <!-- style overrides -->
+  <link rel="stylesheet" href="css/styles.css">
+
+  <!-- Theme used for syntax highlighting of code -->
+  <link rel="stylesheet" href="reveal.js/lib/css/monokai.css">
+
+  <!-- Printing and PDF exports -->
+  <script>
+    var link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.type = 'text/css';
+    link.href = window.location.search.match(/print-pdf/gi) ? 'css/print/pdf.css' : 'css/print/paper.css';
+    document.getElementsByTagName('head')[0].appendChild(link);
+  </script>
+</head>
+
+<body>
+  <div class="reveal">
+    <div class="slides">
+      <section>
+        <h1>React Router</h1>
+        <small></small>
+      </section>
+      <section>
+        <h3>Agenda</h3>
+        <ul>
+          <li>SPA</li>
+          <li>SPA pros and cons</li>
+          <li>React Router</li>
+          <li>SSR</li>
+        </ul>
+      </section>
+      <section>
+        <h2>SPA*</h2>
+        <small>single-page application</small>
+      </section>
+      <section>
+        <h3>Traditional Web Application</h3>
+        <small>For example: classic WordPress</small>
+      </section>
+      <section>
+        <img src="./img/mpa-flow.jpg" alt="MPA" />
+      </section>
+      <section>
+        <h3>What is SPA?</h3>
+        <blockquote>A single-page application (SPA) is a web application or web site that interacts with the user by
+          dynamically rewriting the current page rather than loading entire new pages from a server.</blockquote>
+      </section>
+      <section>
+        <img src="./img/spa-flow.jpg" alt="SPA" />
+      </section>
+      <section>
+        <img src="./img/spa-vs-mpa-pages.png" class="icon" alt="SPA vs MPA pages" />
+      </section>
+      <section>
+        <img src="./img/SPA-architecture.jpg" alt="SPA architecture">
+      </section>
+      <section>
+        <h2>SPA "+" and "-"</h2>
+      </section>
+      <section>
+        <h3>SPA "+"</h3>
+        <ul>
+          <li>Fast and responsive design.</li>
+          <li>Adaptable layout.</li>
+          <li>Caching capabilities.</li>
+          <li>Continuous UX and brand storytelling.</li>
+          <li>A reduced throughput.</li>
+        </ul>
+      </section>
+      <section>
+        <h3>SPA "-"</h3>
+        <ul>
+          <li>Poor SEO optimization.</li>
+          <li>Difficulties in the development process.</li>
+          <li>Poor link sharing capability.</li>
+          <li>Poor app performance on low-end devices.</li>
+          <li>Security issues.</li>
+        </ul>
+      </section>
+      <section>
+        <h2>React Router*</h2>
+        <small><a href="https://reacttraining.com/react-router/web/guides/quick-start">*Quick Start</a></small>
+      </section>
+      <section>
+        <h3>What do we want?</h3>
+        <ul>
+          <li>Change the URL when you navigate to a different screen​.</li>
+          <li>Deep linking should work​.</li>
+          <li>Browser navigation should work like expected.</li>
+          <li>React-like programming style.</li>
+        </ul>
+      </section>
+      <section>
+        <h3>What is React Router?</h3>
+        <blockquote>Declarative routing for React</blockquote>
+      </section>
+      <section>
+        <img src="./img/imperative-routing.png" alt="Imperative Routing" />
+      </section>
+      <section>
+        <img src="./img/declarative-routing.png" alt="Declarative Routing" />
+      </section>
+      <section>
+        <h3>Main Components</h3>
+        <ul>
+          <li>BrowserRouter (aka as Router)</li>
+          <li>Link</li>
+          <li>Route</li>
+          <li>Switch</li>
+        </ul>
+      </section>
+      <section>
+        <p>define router</p>
+        <pre><code data-trim class="JavaScript">
+            import React from 'react'
+            import ReactDOM from 'react-dom'
+            import { BrowserRouter as Router } from 'react-router-dom'
+
+            ReactDOM.render(
+            <Router>
+              <div>
+                <!-- -->
+              </div>
+            </Router>,
+            document.getElementById('app'));
+        </code></pre>
+      </section>
+      <section>
+        <p>define links</p>
+        <pre><code data-trim class="JavaScript">
+            import React from 'react'
+            import ReactDOM from 'react-dom'
+            import { BrowserRouter as Router, Link } from 'react-router-dom'
+
+            ReactDOM.render(
+            <Router>
+              <div>
+                <aside>
+                  <Link to='/dashboard'>Dashboard</Link>
+                  <Link to='/about'>About</Link>
+                </aside>
+              </div>
+            </Router>,
+            document.getElementById('app'));
+        </code></pre>
+      </section>
+      <section>
+        <p>router types</p>
+        <ul>
+          <li>BrowserRouter for '/url/path'</li>
+          <li>HashRouter for '/#/url/path'</li>
+          <li>MemoryRouter for non-browser</li>
+        </ul>
+      </section>
+      <section>
+        <p>define components</p>
+        <pre><code data-trim class="JavaScript">
+            const Dashboard = () => (
+            <div>
+                <h2>Dashboard</h2>
+                ...
+            </div>)
+
+            const About = () => (
+            <div>
+                <h2>About</h2>
+                ...
+            </div>)
+        </code></pre>
+      </section>
+      <section>
+        <p>use components</p>
+        <pre><code data-trim class="JavaScript">
+          <Router>
+            <aside>
+              <Link to={`/`}>Dashboard</Link>
+              <Link to={`/about`}>About</Link>
+            </aside>
+    
+            <Route exact path="/">
+              <Dashboard></Dashboard>
+            </Route>
+            <Route path="/about">
+              <About></About>
+            </Route>
+          </Router>
+        </code></pre>
+      </section>
+      <section>
+        <p>match dynamic parameter</p>
+        <pre><code data-trim class="JavaScript">
+            const Post = () => {
+            const { id } = useParams();
+            // or
+            const matchedId = useRouteMatch("/post/:id");
+            return (
+              <div>
+                <h2>Post #{id} or {matchedId}</h2>
+                ...
+              </div>);
+            }
+            //...
+            <Route exact path="/post/:id">
+              <Post></Post>
+            </Route>
+        </code></pre>
+      </section>
+      <section>
+        <p>exact matching</p>
+        <pre><code data-trim class="JavaScript">
+          <Switch>
+            <Route path="/">
+              <Dashboard></Dashboard>
+            </Route>
+            <Route path="/about">
+              <About></About>
+            </Route>
+          </Switch>
+        </code></pre>
+      </section>
+      <section>
+        <h2>SSR*</h2>
+        <small>*Server-Side rendering</small>
+      </section>
+      <section>
+        <h3>SSR</h3>
+        <blockquote>Server-side rendering (SSR) is a popular technique for rendering a normally client-side only single page app (SPA) on the server and then sending a fully rendered page to the client. The client’s JavaScript bundle can then take over and the SPA can operate as normal.</blockquote>
+      </section>
+      <section>
+        <h3>Why SSR?</h3>
+        <ul>
+          <li>SEO optimization</li>
+          <li>Performance</li>
+        </ul>
+      </section>
+      <section>
+        <h3>SSR Examples</h3>
+        <ul>
+          <li><a href="https://reactjs.org/docs/react-dom-server.html">ReactDOMServer</a></li>
+          <li><a href="https://www.electrode.io/">Electrode</a></li>
+        </ul>
+        <p><small>and many more...</small></p>
+      </section>
+      <section>
+        <h2>Thank you for listening!</h2>
+      </section>
+      <section>
+        <h2>Please, ask questions!</h2>
+      </section>
+    </div>
+  </div>
+
+  <script src="reveal.js/js/reveal.js"></script>
+
+  <script>
+    Reveal.initialize({
+      dependencies: [
+        // Interpret Markdown in <section> elements
+        { src: 'reveal.js/plugin/markdown/marked.js', condition: function () { return !!document.querySelector('[data-markdown]'); } },
+        { src: 'reveal.js/plugin/markdown/markdown.js', condition: function () { return !!document.querySelector('[data-markdown]'); } },
+
+        // Syntax highlight for <code> elements
+        { src: 'reveal.js/plugin/highlight/highlight.js', async: true },
+
+        // Zoom in and out with Alt+click
+        { src: 'reveal.js/plugin/zoom-js/zoom.js', async: true },
+
+        // Speaker notes
+        { src: 'reveal.js/plugin/notes/notes.js', async: true },
+
+        // MathJax
+        { src: 'reveal.js/plugin/math/math.js', async: true }
+      ]
+    });
+  </script>
+</body>
+
+</html>

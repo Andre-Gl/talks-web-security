@@ -1,0 +1,73 @@
+/* Overrides for reveal.js styles */
+
+@keyframes Gradient {
+	0% {
+		background-position: 0% 50%
+	}
+	50% {
+		background-position: 100% 50%
+	}
+	100% {
+		background-position: 0% 50%
+	}
+}
+
+.reveal section blockquote {
+  text-align: left;
+}
+
+.reveal section .ig-img {
+  position: relative;
+  display: inline-block;
+}
+
+.reveal section .ig-img img {
+  border: 0;
+  padding: 40px 0;
+  margin: 0;
+  background-color: #FFFFFF;
+}
+
+.reveal section .ig-img .header {
+  position: absolute;
+  top: 6px;
+  left: 15px;
+  background-color: #CCCCCC;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  background: linear-gradient(-90deg, #EE7752, #E73C7E, #23A6D5, #23D5AB);
+	background-size: 400% 400%;
+	animation: Gradient 10s ease infinite;
+}
+
+.reveal section .ig-img .footer {
+  position: absolute;
+  bottom: 15px;
+  left: 15px;
+  color: transparent;
+  background: linear-gradient(-90deg, #000000, #000000, #FF0000, #FF0000);
+  -webkit-background-clip: text;
+  background-size: 400% 400%;
+	animation: Gradient 5s ease infinite;
+}
+
+.reveal section img.icon {
+  background: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  box-shadow: none;
+}
+
+.reveal section .display-block {
+  display: block;
+}
+
+.reveal section .text-left {
+  text-align: left;
+}
+
+.reveal section .pull-right {
+  float: right;
+}
