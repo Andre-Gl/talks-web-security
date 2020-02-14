@@ -1,7 +1,7 @@
 {
-  "name": "talks-ipc",
+  "name": "talks-web-security",
   "version": "1.0.0",
-  "description": "Talk about inter-process communication mechanisms",
+  "description": "Talk about web security",
   "main": "",
   "dependencies": {
 
@@ -12,12 +12,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/Andre-Gl/talks-ipc.git"
+    "url": "https://github.com/Andre-Gl/talks-web-security.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Andre-Gl/talks-ipc/issues"
+    "url": "https://github.com/Andre-Gl/talks-web-security/issues"
   },
-  "homepage": "https://github.com/Andre-Gl/talks-ipc"
+  "homepage": "https://github.com/Andre-Gl/talks-web-security"
 }
