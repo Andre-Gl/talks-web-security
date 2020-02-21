@@ -72,33 +72,6 @@
   float: right;
 }
 
-.reveal section .text-red {
-  color: red;
-}
-
-.reveal section .table {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-}
-
-.reveal section .table .column30 {
-  width: 30%;
-}
-
-.reveal section .table .column50 {
-  width: 50%;
-}
-
-.reveal section .table .column70 {
-  width: 70%;
-}
-
-.reveal section .react-component {
-  width: 90%;
-  margin: 20px auto;
-}
-
 .reveal section twitter-widget {
   margin: 0 auto;
 }

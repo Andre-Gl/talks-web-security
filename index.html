@@ -31,7 +31,7 @@
     <div class="slides">
       <section>
         <h1>Web Security</h1>
-        <small></small>
+        <p>Perspective from WhataApp web team.</p>
       </section>
 
       <section>
@@ -39,7 +39,9 @@
         <ul>
           <!-- <li>OWASP top 10</li> -->
           <li>Where'er the threats?</li>
-          <li>XSS Examples</li>
+          <li>Cross-Site Scripting (XSS)</li>
+          <li>Examples out there</li>
+          <li>Remediation</li>
         </ul>
       </section>
 
@@ -49,14 +51,14 @@
         <small><a href="https://www.hackerone.com/sites/default/files/2019-08/hacker-powered-security-report-2019.pdf">HackerOne 2019 Report</a></small>
       </section>
       <section>
-        <h3>CROSS-SITE SCRIPTING (XSS)</h3>
+        <h3>Cross-Site Scripting (XSS)</h3>
         <ul>
           <li><p>Injecting untrusted scripts into trusted web contents</p></li>
-          <li><p>Insufficient validation, sanitization or escaping of strings from untrusted sources</p></li>
+          <li><p>Usually caused by insufficient validation, sanitization or escaping of strings from untrusted sources</p></li>
         </ul>
       </section>
       <section>
-        <h3>>Why is it common?</h3>
+        <h3>Why is it common?</h3>
         <ul>
           <li>
             <p>XSS is easy to introduce</p>
@@ -65,8 +67,10 @@
               document.createElement('div').innerHTML='&lt;foo&gt;';
               document.createElement('script').src='//foo';
               document.createElement('div').innerHTML='&lt;foo&gt;';
-              document.createElement('a').insertAdjacentHTML('beforebegin', '&lt;foo&gt;');
-              new DOMParser().createFromString('&lt;foo&gt;', 'text/html');
+              document.createElement('a').insertAdjacentHTML(
+                'beforebegin', '&lt;foo&gt;');
+              new DOMParser().createFromString(
+                '&lt;foo&gt;', 'text/html');
               window.open('//foo');
             </code></pre>
 
@@ -79,6 +83,27 @@
           </li>
       </section>
       <section>
+        <h3>Types of Cross-Site Scripting attacks</h3>
+        <ul>
+          <li>
+            Reflected
+            <p>Atacker needs to induce user to make a particular request containing their exploit.</p>
+          </li>
+          <li>
+            Stored (or Persistent)
+            <p>The exploit placed into application itself.</p>
+          </li>
+        </ul>
+      </section>
+      <section>
+        <h3>Stored Cross-Site Scripting attacks</h3>
+        <p>Can be subclassified by how many clicks user need to perform to encouter exploit.</p>
+        <ul>
+          <li>"0-clicks" means visiting a page triggers exploit.</li>
+          <li>"1-clicks" means user needs to perform single particular action to trigger exploit.</li>
+        </ul>
+      </section>
+      <section>
         <h3>But we use react!</h3>
         <ul>
           <li>
@@ -88,7 +113,6 @@
           </li>
           <li>The only framework without XSS mitigation bypasses<sup>1</sup></li>
         </ul>
-        <p>Doesn't it protect my app from XSS?</p>
         <footer>
           <small>
             <sup>1*</sup>
@@ -97,67 +121,65 @@
         </footer>
       </section>
       <section>
-        <h3>Let's see examples</h3>
+        <h3>Why do mitigations exisits</h3>
+        <p>Some frameworks and libraries has XSS vulnerability in their base.
+          They are impossible to fix and instead are mitigated by workarounds.</p>
       </section>
       <section>
-        <div class="table">
-          <div class="column30">
-            <h4>Demo: simple text box</h4>
-            <div class="react-component" id="SimpleTextInput"></div>
-          </div>
-          <div class="column70">
-            <pre><code data-trim class="hljs">
-              function SimpleTextInput() {
-                const [text, setText] = React.useState('Welcome!');
-          
-                return (
-                  &lt;div&gt;
-                      &lt;input
-                        type="text"
-                        onChange={e =&gt;
-                          setText(e.target.value)
-                        }
-                      /&gt;
-                      &lt;p&gt;{text}&lt;/p&gt;
-                    &lt;/div&gt;
-                );
-              }
-            </code></pre>
-          </div>
-        </div>
+        <h3>Mitigation bypassess</h3>
+        <p>Mitigations do not fix the vulnerability.
+          They try to make the attacks harder instead.
+          The XSS is still there, it’s just presumably
+          harder to exploit it.</p>
       </section>
       <section>
-        <div class="table">
-          <div class="column30">
-            <h4>Demo: rich text box</h4>
-            <div class="react-component" id="RichTextInput"></div>
-          </div>
-          <div class="column70">
-            <pre><code data-trim class="hljs">
-              function RichTextInput() {
-                const [text, setText] = React.useState('Welcome!');
-          
-                return (
-                  &lt;div&gt;
-                      &lt;input
-                        type="text"
-                        onChange={e =&gt;
-                          setText(e.target.value)
-                        }
-                      /&gt;
-                      &lt;p
-                        dangerouslySetInnerHTML={
-                          {__html: text}
-                        }&gt;&lt;/p&gt;
-                    &lt;/div&gt;
-                );
-              }
-            </code></pre>
-          </div>
-        </div>
+        <h3>Examples out there</h3>
       </section>
       <section>
-        <h3>Who would do that?</h3>
+        <h4>Demo: simple text box</h4>
+        <pre><code data-trim class="hljs">
+          function SimpleTextInput() {
+            const [text, setText] = React.useState('Welcome!');
+      
+            return (
+              &lt;div&gt;
+                  &lt;input
+                    type="text"
+                    onChange={e =&gt;
+                      setText(e.target.value)
+                    }
+                  /&gt;
+                  &lt;p&gt;{text}&lt;/p&gt;
+                &lt;/div&gt;
+            );
+          }
+        </code></pre>
+      </section>
+      <section>
+        <h4>Demo: rich text box</h4>
+        <pre><code data-trim class="hljs">
+          function RichTextInput() {
+            const [text, setText] = React.useState('Welcome!');
+      
+            return (
+              &lt;div&gt;
+                  &lt;input
+                    type="text"
+                    onChange={e =&gt;
+                      setText(e.target.value)
+                    }
+                  /&gt;
+                  &lt;p
+                    dangerouslySetInnerHTML={
+                      {__html: text}
+                    }&gt;&lt;/p&gt;
+                &lt;/div&gt;
+            );
+          }
+        </code></pre>
+      </section>
+      <section>
+        <h3>What would that do?</h3>
       </section>
       <section>
         <h3>Signal Desktop<sup>1</sup></h3>
@@ -171,9 +193,8 @@
       <section>
         <h3>Signal Desktop</h3>
         <ul>
-          <li><p>0-click XSS in quoted reply messages.</p></li>
-          <li><p>Electron application, XSS becomes RCE (more on this later).</p></li>
-          <li><p >Signal Desktop used <code class="inline-code">dangerouslySetInnerHTML</code> to set text.</p></li>
+          <li><p>0-click XSS in quoted reply messages leading to Session Hijacking.</p></li>
+          <li><p>In Electron application XSS becomes RCE.</p></li>
         </ul>
         <pre><code data-trim class="hljs">
           if (text) {
@@ -184,58 +205,44 @@
         </code></pre>
       </section>
       <section>
-        <div class="table">
-          <div class="column30">
-            <h4>Demo: links</h4>
-            <div class="react-component" id="LinksTextInput"></div>
-          </div>
-          <div class="column70">
-            <pre><code data-trim class="hljs">
-              function LinksTextInput() {
-                const [links, setLinks] = React.useState([]);
-          
-                return (
-                  &lt;div&gt;
-                    &lt;input
-                      type="text"
-                      onKeyPress={e =&gt; {
-                        if (e.key === 'Enter') {
-                          setLinks(
-                            [...links, e.target.value]
-                          );
-                        }
-                      }}
-                    /&gt;
-                    &lt;ul&gt;
-                      {links.map(link =&gt;
-                          &lt;li&gt;&lt;a href={link}&gt;{link}&lt;/a&gt;&lt;/li&gt;
-                      )}
-                    &lt;/ul&gt;
-                  &lt;/div&gt;
-                );
-              }
-            </code></pre>
-          </div>
-        </div>
-      </section>
-      <section>
-        <h3>Links Sanitization</h3>
+        <h4>Demo: links</h4>
         <pre><code data-trim class="hljs">
-          const userSuppliedURL = e.target.value;
-          const parsed = new URL(userSuppliedURL);
-          if(parsed.protocol !== "https:") {
-            return; // Bad Link!
+          function LinksTextInput() {
+            const [links, setLinks] = React.useState([]);
+      
+            return (
+              &lt;div&gt;
+                &lt;input
+                  type="text"
+                  onKeyPress={e =&gt; {
+                    if (e.key === 'Enter') {
+                      setLinks(
+                        [...links, e.target.value]
+                      );
+                    }
+                  }}
+                /&gt;
+                &lt;ul&gt;
+                  {links.map(link =&gt;
+                      &lt;li&gt;&lt;a href={link}&gt;{link}&lt;/a&gt;&lt;/li&gt;
+                  )}
+                &lt;/ul&gt;
+              &lt;/div&gt;
+            );
           }
         </code></pre>
       </section>
       <section>
-        <h3>Who would do that?</h3>
+        <h3>What would that do?</h3>
       </section>
       <section>
-        <h3>Lack of URL validation causes security issues in WhatsApp Web/Native</h3>
+        <h3>Lack of URL validation causes security issues in WhatsApp Web/Desktop</h3>
         <ul>
-          <li><p><sup></sup> Stored XSS in web.whatsapp.com + RCE in WhatsApp desktop clients</p></li>
-          <li><p><sup>1</sup>1-Click stored XSS on WhatsApp Web leading to Session Hijacking</p></li>
+          <li><p>
+            <sup>1</sup>
+            1-Click stored XSS on WhatsApp Web leading to Session Hijacking</p>
+          </li>
+          <li><p>In Electron application XSS becomes RCE.</p></li>
         </ul>
         <footer>
           <small>
@@ -243,6 +250,38 @@
             <a href="https://thehackernews.com/2020/02/hack-whatsapp-web.html">https://thehackernews.com/2020/02/hack-whatsapp-web.html</a>
           </small>
         </footer>
+      </section>
+      <section>
+        <h4>Demo: link reconstruction</h4>
+        <pre><code data-trim class="hljs">
+          function ParsedLinksTextInput() {
+            const [links, setLinks] = React.useState([]);
+      
+            return (
+              ...
+                &lt;ul&gt;
+                  {links.map(link =&gt;
+                      &lt;li&gt;&lt;a href={`https://${link.domain}{link.path}`}&gt;
+                        {`https//${link.domain}{link.path}`}
+                      &lt;/a&gt;&lt;/li&gt;
+                  )}
+                &lt;/ul&gt;
+              ...
+            );
+          }
+        </code></pre>
+      </section>
+      <section>
+        <h3>What would that do?</h3>
+      </section>
+      <section>
+        <h3>Incorrect url reconstruction causes security issues in WhatsApp Web/Desktop</h3>
+        <ul>
+          <li><p>
+            <sup>1</sup>
+            1-Click stored XSS on WhatsApp Web leading to Session Hijacking</p>
+          </li>
+        </ul>
       </section>
       <section>
         <h3>XSS to Electron RCE</h3>
@@ -253,7 +292,8 @@
           </p></li>
           <li><p>
             <sup>2</sup>
-            <code class="inline-code">contextIsolation</code> when OFF allows prototype pollution attacks
+            <code class="inline-code">contextIsolation</code> when OFF allows preload script and renderer in the same JavaScript context
+            <p>Allows prototype pollution attacks</p>
           </p></li>
         </ul>
         <footer>
@@ -268,7 +308,17 @@
         </footer>
       </section>
       <section>
-        <h3>Demo</h3>
+        <h3>Demo: Node Integration</h3>
+        <pre><code data-trim class="hljs">
+          require('child_process').execSync('/Applications/Calculator.app');
+        </code></pre>
+        <pre><code data-trim class="hljs">
+          // Require is removed but process is exposed.
+          process.mainModule.require('child_process').execSync('/Applications/Calculator.app');
+        </code></pre>
+      </section>
+      <section>
+        <h3>Demo: Context Isolation</h3>
         <pre><code data-trim class="hljs">
           let emit = this.Native.ipcRenderer.__proto__.emit;
           this.Native.ipcRenderer.__proto__.emit = function(...args) {
@@ -286,7 +336,29 @@
         </code></pre>
       </section>
       <section>
-        <h3>Content Security Policy</h3>
+        <h3>Remediation</h3>
+      </section>
+      <section>
+        <h3>Links Sanitization</h3>
+        <pre><code data-trim class="hljs">
+          const userSuppliedURL = e.target.value;
+          // path here starts with '/'
+          const parsed = new URL(userSuppliedURL);
+          // whitelist protocols
+          if (parsed.protocol !== "https:") {
+            return; // Bad Link!
+          }
+        </code></pre>
+      </section>
+      <section>
+        <h2>Content Security Policy (CSP)</h2>
+        <footer>
+          <small>
+            <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP">https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP</a></small>
+        </footer>
+      </section>
+      <section>
+        <h3>CSP</h3>
         <p>Let the browser enforce:</p>
         <ul>
           <li><p>
@@ -299,7 +371,7 @@
                 Disables inline <code class="inline-code">&lt;script&gt;</code> elems by default, prevents <code class="inline-code">eval()</code> in JS
               </p></li>
               <li><p>
-                hash / nonce based authentication for trusted scripts (next slide)
+                hash / nonce based authentication for trusted scripts
               </p></li>
             </ul>
           </p></li>
@@ -309,35 +381,78 @@
         </ul>
       </section>
       <section>
+        <h3>Define CSP</h3>
+        <p>as an http response headers</p>
+        <pre><code data-trim>
+          Content-Security-Policy: policy
+        </code></pre>
+        <p>as a meta tag</p>
+        <pre><code data-trim>
+          &lt;meta http-equiv="Content-Security-Policy" content="policy" &gt;
+        </code></pre>
+      </section>
+      <section>
         <h3>CSP: Script Src</h3>
         <pre><code data-trim class="hljs">
-          Content-Security-Policy: script-src https: 'self'
+          Content-Security-Policy: script-src https://example.com/;
         </code></pre>
         <pre><code data-trim class="hljs">
-          <script src="http://example.com/js/library.js"></script> // Error!
+          &lt;script src="https://non-example.com/js/library.js" /&gt; // Error!
         </code></pre>
         <img src="./img/csp-error.png" alt="">
         <pre><code data-trim class="hljs">
-          <script src="https://example.com/js/library.js"></script> // Ok
+          &lt;script src="https://example.com/js/library.js" /&gt; // Ok
+        </code></pre>
+      </section>
+      <section>
+        <h3>CSP: Script Nonce</h3>
+        <pre><code>
+          &lt;script src="..." nonce="nоnce-${hash}" /&gt;
+        </code></pre>
+        <pre><code data-trim class="hljs">
+          Content-Security-Policy: script-src nоnce-${hash};
         </code></pre>
       </section>
       <section>
         <h3>CSP: Script Src Report Only</h3>
         <pre><code data-trim class="hljs">
-          Content-Security-Policy-Report-Only: script-src https: 'self'
+          Content-Security-Policy-Report-Only: script-src https://example.com/
+            report-uri https://www.facebook.com/csp/reporting/;
         </code></pre>
         <pre><code data-trim class="hljs">
-          <script src="http://example.com/js/library.js"></script> // Report error!
+          /&gt;script src="https://non-example.com.com/js/library.js" /&gt // Report error!
         </code></pre>
         <img src="./img/csp-report.png" width="800" alt="">
         <pre><code data-trim class="hljs">
-          <script src="https://example.com/js/library.js"></script> // Ok
+          /&gt;script src="https://example.com/js/library.js" /&gt // Ok
+        </code></pre>
+      </section>
+      <section>
+        <h3>CSP: Script Webpack config</h3>
+        <pre><code data-trim class="hljs">
+          new ScriptExtHtmlWebpackPlugin({
+            custom: [{
+                    test: /\.js$/,
+                    attribute: 'nonce',
+                    value: 'nonce-' + sha256Str
+            }]
+          }),
+          new CspHtmlWebpackPlugin({
+              'base-uri': '\'self\'',
+              'object-src': '\'none\'',
+              'script-src': ['\'self\'', '\'unsafe-eval\'', '\'nonce-' + sha256Str + '\''],
+              'style-src': ['\'unsafe-inline\'', '\'self\'']
+            }, {
+              devAllowUnsafe: false,
+              enabled: true,
+              hashingMethod: 'sha256'
+          }),
         </code></pre>
       </section>
       <section>
         <h3>CSP: Trusted Types</h3>
         <pre><code data-trim class="hljs">
-          Content-Security-Policy: trusted-types *
+          Content-Security-Policy: trusted-types *;
         </code></pre>
         <pre><code data-trim class="hljs">
           element.innerHTML = 'A String'; // TypeError!
@@ -369,6 +484,20 @@
       <section>
         <h3>Remediation</h3>
         <ul>
+          <li>Security Teams</li>
+          <li>External services like WhiteHatSec<sup>1</sup></li>
+          <li>Use your knowledge</li>
+        </ul>
+        <footer>
+          <p>
+            <sup>1</sup>
+            <a href="https://www.whitehatsec.com/">https://www.whitehatsec.com/</a>
+          </p>
+        </footer>
+      </section>
+      <section>
+        <h3>Remediation</h3>
+        <ul>
           <li><p>Never use <code class="inline-code">dangerouslySetInnerHTML</code> with user-supplied input</p></li>
           <li><p>This includes using <code class="inline-code">document.createElement</code> and <code class="inline-code"></code>elem.innerHtml</code> in util scripts!</p></li>
           <li><p>Use iFrame sandboxing when sanitizing user provided input (or better yet, don't touch the DOM!)</p></li>
@@ -383,107 +512,40 @@
         <h2>Thank you for listening!</h2>
         <h3>Please, ask questions!</h3>
       </section>
+      <section>
+        <h3>To read more</h3>
+        <ul>
+          <li><small>
+            <a href="http://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=WhatsApp">
+              Common Vulnerabilities and Exposures
+            </a>
+            <br />
+            by U.S. Department of Homeland Security
+          </small></li>
+          <li><small>
+            <a href="https://habr.com/ru/post/445932/">
+              Безопасность клиентских приложений: практические советы для Front-end разработчика
+            </a>
+            <br/>
+            by Alexander Rudenko
+          </small></li>
+          <li><small>
+            <a href="https://www.linkedin.com/pulse/even-faster-single-page-application-9security-sergei-iastrebov/">
+              Even Faster Single Page Application: 9.Security
+            </a>
+            <br/>
+            by Sergei Iastrebov
+            </small>
+          </small></li>
+        </ul>
+      </section>
     </div>
   </div>
 
   <script src="reveal.js/js/reveal.js"></script>
-  <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
-  <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
-  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-  <!-- <script type="text/babel" src="./js/examples.js"></script> -->
-  <script type="text/babel">
-    function SimpleTextInput() {
-      const [text, setText] = React.useState('Welcome!');
-
-      return (
-        <div>
-            <input
-              style={{
-                width: "100%",
-                fontSize: "24px",
-                padding: "10px"
-              }}
-              type="text"
-              onChange={e => setText(e.target.value)}
-            />
-            <p>{text}</p>
-          </div>
-      );
-    }
-
-    ReactDOM.render(
-        <SimpleTextInput />,
-        document.getElementById('SimpleTextInput'),
-    );
-  </script>
-  <script type="text/babel">
-    function RichTextInput() {
-      const [text, setText] = React.useState('Welcome!');
-
-      return (
-        <div>
-            <input
-              style={{
-                width: "100%",
-                fontSize: "24px",
-                padding: "10px"
-              }}
-              type="text"
-              onChange={e => setText(e.target.value)}
-            />
-            <p dangerouslySetInnerHTML={{__html: text}}></p>
-          </div>
-      );
-    }
-
-    ReactDOM.render(
-        <RichTextInput />,
-        document.getElementById('RichTextInput'),
-    );
-  </script>
-   <script type="text/babel">
-    function LinksTextInput() {
-      const [links, setLinks] = React.useState([]);
-
-      return (
-        <div>
-          <input
-            style={{
-              width: "100%",
-              fontSize: "24px",
-              padding: "10px"
-            }}
-            type="text"
-            onKeyPress={e => {
-              if (e.key === 'Enter') {
-                setLinks(
-                  [...links, e.target.value]
-                );
-              }
-            }}
-          />
-          <ul>
-            {links.map(link =>
-                <li><a href={link}>{link}</a></li>
-            )}
-          </ul>
-        </div>
-      );
-    }
-
-    ReactDOM.render(
-        <LinksTextInput />,
-        document.getElementById('LinksTextInput'),
-    );
-  </script>
 
   <script>
     Reveal.initialize({
-      width: "100%",
-      height: "100%",
-      margin: 0,
-      minScale: 1,
-      maxScale: 1,
       dependencies: [
         // Interpret Markdown in <section> elements
         { src: 'reveal.js/plugin/markdown/marked.js', condition: function () { return !!document.querySelector('[data-markdown]'); } },
