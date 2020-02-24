@@ -28,37 +28,60 @@
 
 <body>
   <div class="reveal">
+    <div class='footer'>
+      <img height="64" src="./img/WA-web-logo-no-text.png" alt="WhatsApp Web logo">
+    </div>
     <div class="slides">
       <section>
         <h1>Web Security</h1>
-        <p>Perspective from WhataApp web team.</p>
+        <img height="64" src="./img/WA-web-logo.png" class="icon" alt="WhatsApp Web logo">
+      </section>
+      <section>
+        <h3>About me</h3>
+        <p>Andre Gloukhmantchouk</p>
+        <p>Front-End Engineer @Facebook WhatsApp Web</p>
       </section>
 
       <section>
         <h3>Agenda</h3>
         <ul>
-          <!-- <li>OWASP top 10</li> -->
           <li>Where'er the threats?</li>
           <li>Cross-Site Scripting (XSS)</li>
-          <li>Examples out there</li>
+          <li>Examples os XSS out there</li>
           <li>Remediation</li>
+        </ul>
+      </section>
+      <section>
+        <h3>Where'er the threats?</h3>
+      </section>
+      <section>
+        <img src="./img/sql-inj.jpeg" alt="SQL Injection">
+      </section>
+      <section>
+        <h3>Where'er the threats?</h3>
+        <p>We as users want content and services online 24/7.</p>
+        <ul>
+          <li>Banking</li>
+          <li>Health information</li>
+          <li>Travel plans and tickets</li>
+          <li>Communication with loved ones or business</li>
         </ul>
       </section>
 
       <section>
-        <h3>Where'er the threats?</h3>
-        <img src="./img/stats.png" alt="Threats State">
+        <img src="./img/stats.png" class="icon" alt="Threats State">
         <small><a href="https://www.hackerone.com/sites/default/files/2019-08/hacker-powered-security-report-2019.pdf">HackerOne 2019 Report</a></small>
       </section>
       <section>
         <h3>Cross-Site Scripting (XSS)</h3>
         <ul>
-          <li><p>Injecting untrusted scripts into trusted web contents</p></li>
-          <li><p>Usually caused by insufficient validation, sanitization or escaping of strings from untrusted sources</p></li>
+          <li><p>Injecting untrusted scripts into trusted web contents.</p></li>
+          <li><p>XSS attacks occur when an attacker uses a web application to send malicious code, generally in the form of a browser side script, to a different end user.</p></li>
+          <li><p>Usually caused by insufficient validation, sanitization or escaping of strings from untrusted sources.</p></li>
         </ul>
       </section>
       <section>
-        <h3>Why is it common?</h3>
+        <h3>Why Cross-Site Scripting attacks common?</h3>
         <ul>
           <li>
             <p>XSS is easy to introduce</p>
@@ -96,14 +119,6 @@
         </ul>
       </section>
       <section>
-        <h3>Stored Cross-Site Scripting attacks</h3>
-        <p>Can be subclassified by how many clicks user need to perform to encouter exploit.</p>
-        <ul>
-          <li>"0-clicks" means visiting a page triggers exploit.</li>
-          <li>"1-clicks" means user needs to perform single particular action to trigger exploit.</li>
-        </ul>
-      </section>
-      <section>
         <h3>But we use react!</h3>
         <ul>
           <li>
@@ -130,10 +145,16 @@
         <p>Mitigations do not fix the vulnerability.
           They try to make the attacks harder instead.
           The XSS is still there, it’s just presumably
-          harder to exploit it.</p>
+          harder to exploit it<sup>1</sup>.</p>
+        <footer>
+          <small>
+            <sup>1</sup>
+            <a href="https://www.owasp.org/images/3/32/OWASP_BeNeLux-Day_2017_Bypassing_XSS_mitigations_via_script_gadgets_Sebastian_Lekies.pdf">https://www.owasp.org/images/3/32/OWASP_BeNeLux-Day_2017_Bypassing_XSS_mitigations_via_script_gadgets_Sebastian_Lekies.pdf</a>
+          </small>
+        </footer>
       </section>
       <section>
-        <h3>Examples out there</h3>
+        <h3>Examples of XSS out there</h3>
       </section>
       <section>
         <h4>Demo: simple text box</h4>
@@ -278,7 +299,6 @@
         <h3>Incorrect url reconstruction causes security issues in WhatsApp Web/Desktop</h3>
         <ul>
           <li><p>
-            <sup>1</sup>
             1-Click stored XSS on WhatsApp Web leading to Session Hijacking</p>
           </li>
         </ul>
@@ -420,11 +440,11 @@
             report-uri https://www.facebook.com/csp/reporting/;
         </code></pre>
         <pre><code data-trim class="hljs">
-          /&gt;script src="https://non-example.com.com/js/library.js" /&gt // Report error!
+          /&lt;script src="https://non-example.com.com/js/library.js" /&gt // Report error!
         </code></pre>
         <img src="./img/csp-report.png" width="800" alt="">
         <pre><code data-trim class="hljs">
-          /&gt;script src="https://example.com/js/library.js" /&gt // Ok
+          /&lt;script src="https://example.com/js/library.js" /&gt // Ok
         </code></pre>
       </section>
       <section>
@@ -538,6 +558,16 @@
             </small>
           </small></li>
         </ul>
+      </section>
+      <section>
+        <h3>WhatsApp perspective</h3>
+        <p>Traditionally user generated content has quite a few stops before it reaches other participants.</p>
+        <img src="./img/way-bw.png" height="400" class="icon" alt="Message way">
+      </section>
+      <section>
+        <h3>WhatsApp perspective</h3>
+        <p>In WhatsApp world user generated content has only 2 stops.</p>
+        <img src="./img/alice-bob-inv.png" height="400" class="icon" alt="Alice and Bob">
       </section>
     </div>
   </div>
