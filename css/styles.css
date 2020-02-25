@@ -26,6 +26,8 @@
 .reveal section .ig-img {
   position: relative;
   display: inline-block;
+  flex-shrink: 0;
+  margin: 0 30px;
 }
 
 .reveal section .ig-img img {
@@ -71,8 +73,16 @@
   display: block;
 }
 
+.reveal section .display-flex {
+  display: flex;
+}
+
 .reveal section .text-left {
   text-align: left;
+}
+
+.reveal section .text-right {
+  text-align: right;
 }
 
 .reveal section .pull-right {

@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-  <title>Web Security Demo</title>
+  <title>Security in Web applications - Demo</title>
 
   <link rel="stylesheet" href="../reveal.js/css/reset.css">
   <link rel="stylesheet" href="../reveal.js/css/reveal.css">
@@ -101,12 +101,14 @@
   <script type="text/babel">
     function RichTextInput() {
       const [text, setText] = React.useState('Welcome!');
+      const inputRef = React.useRef(null);
 
       return (
         <div>
           <input
+            ref={inputRef}
             style={{
-              width: "300px",
+              width: "500px",
               fontSize: "24px",
               padding: "10px"
             }}
@@ -119,9 +121,10 @@
               fontSize: "24px",
               padding: "10px"
             }}
-            onClick={e => setText(
-              '<img src="broken" onerror="alert(`hack`)">'
-            )}>
+            onClick={e => {
+              inputRef.current.value =
+                '<img src="broken" onerror="alert(`hack`)">';
+            }}>
             Add expoit!
           </button>
           <p dangerouslySetInnerHTML={{ __html: text }}></p>
@@ -137,12 +140,14 @@
   <script type="text/babel">
     function LinksTextInput() {
       const [links, setLinks] = React.useState([]);
+      const inputRef = React.useRef(null);
 
       return (
         <div>
           <input
+            ref={inputRef}
             style={{
-              width: "300px",
+              width: "500px",
               fontSize: "24px",
               padding: "10px"
             }}
@@ -161,9 +166,10 @@
               fontSize: "24px",
               padding: "10px"
             }}
-            onClick={e => setLinks(
-              [...links, 'javascript:alert("hack")']
-            )}>
+            onClick={e => {
+              inputRef.current.value =
+                'javascript:alert("hack")';
+            }}>
             Add expoit!
          </button>
           <div>
@@ -183,12 +189,9 @@
     );
   </script>
 
-  </script>
-
   <script type="text/babel">
     function parseLink(link) {
       const match = link.replace(/https?:\/\//, '').match(/([^\/]*)(.*)/);
-      // console.log(match)
       return {
         domain: match[1],
         path: match[2],
@@ -202,7 +205,7 @@
         <div>
           <input
             style={{
-              width: "300px",
+              width: "500px",
               fontSize: "24px",
               padding: "10px"
             }}
@@ -221,15 +224,24 @@
               fontSize: "24px",
               padding: "10px"
             }}
-            onClick={e => setLinks(
-              [...links, { domain: 'google.com', path: '.hack/a/1' }]
-            )}>
+            onClick={e =>
+              setLinks(
+                [...links, { domain: 'google.com', path: '.hack/maps/' }])
+            }>
             Add expoit!
          </button>
           <div>
             <ul>
               {links.map(link =>
-                <li><a href={`https//${link.domain}${link.path}`}>{`https://${link.domain}${link.path}`}</a></li>
+                <li>
+                  <a href={`https://${link.domain}${link.path}`}>
+                    {`https://${link.domain}${link.path}`}
+                  </a>
+                  <div>
+                    <span> d: "{link.domain}"</span>
+                    <span> p: "{link.path}"</span>
+                  </div>
+                </li>
               )}
             </ul>
           </div>
