@@ -345,6 +345,10 @@
       </section>
       <section>
         <h3>Demo: Node Integration</h3>
+        <img src="./img/electron.png" alt="Electron">
+      </section>
+      <section>
+        <h3>Demo: Node Integration</h3>
         <p><code class="inline-code">nodeIntegration</code> enabled</p>
         <pre><code data-trim class="hljs">
           require('child_process')
@@ -556,6 +560,23 @@
           <li><p>Lint rules to detect use of dangerous functions and bad coding patterns</p></li>
           <li><p>Be excited and ready to adopt new security features</p></li>
         </ul>
+      </section>
+      <section>
+        <h3>Remediation</h3>
+        <ul>
+          <li>
+            <p>Use recomended security settings for <code class="inline-code">nodeIntegration</code> and <code class="inline-code">contextIsolation</code> in your Electron Application</p>
+          </li>
+          <li>
+            <p>Explore API to expose only necessary integrations to browser context<sup>1</sup></p>
+          </li>
+        </ul>
+        <footer>
+          <small>
+            <sup>1</sup>
+            <a href="https://www.electronjs.org/docs/api/context-bridge">https://www.electronjs.org/docs/api/context-bridge</a>
+          </small>
+        </footer>
       </section>
       <section>
         <h3>Remediation</h3>
