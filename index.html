@@ -454,7 +454,7 @@
       <section>
         <h3>CSP: Script Nonce</h3>
         <pre><code data-trim class="hljs">
-          &lt;script src="/*...*/" nonce="nоnce-${hash}" /&gt;
+          &lt;script src="/*...*/" nonce="{hash}" /&gt;
         </code></pre>
         <pre><code data-trim class="hljs">
           Content-Security-Policy: script-src nоnce-${hash};
@@ -463,22 +463,44 @@
       <section>
         <h3>CSP: Script Webpack config</h3>
         <pre><code data-trim class="hljs">
-          new ScriptExtHtmlWebpackPlugin({
-            custom: [{
-                    test: /\.js$/,
-                    attribute: 'nonce',
-                    value: 'nonce-' + sha256Str
-            }]
-          }),
+          new HtmlWebpackPlugin({
+          // ...
           new CspHtmlWebpackPlugin({
-              // ...
-              'script-src': ['\'nonce-' + sha256Str + '\''],
-              // ...
-            }, {
-              devAllowUnsafe: false,
-              enabled: true,
-              hashingMethod: 'sha256'
+            'script-src': ["'unsafe-inline'", "'self'", "'unsafe-eval'"],
+            'style-src': ["'unsafe-inline'", "'self'", "'unsafe-eval'"],
+          },{
+            enabled: true,
+            hashingMethod: 'sha256',
+            nonceEnabled: {
+              'script-src': true,
+              'style-src': true,
+            },
           }),
+        </code></pre>
+        <footer>
+          <small>
+            <a href="https://github.com/slackhq/csp-html-webpack-plugin">https://github.com/slackhq/csp-html-webpack-plugin</a>
+          </small>
+        </footer>
+      </section>
+      <section>
+        <h3>CSP: Script Webpack config</h3>
+        <pre><code data-trim class="hljs">
+          &lt;meta http-equiv="Content-Security-Policy"
+            content="
+              script-src 'unsafe-inline' 'self' 'unsafe-eval'
+                'nonce-WpYn/8AoeUea09mkJFkRrQ==' 'nonce-W3DRAPOiqqSLosEhvG59Ew==';
+              style-src 'unsafe-inline' 'self' 'unsafe-eval'
+                'nonce-MRk2lpGYVUAZKE+91tA1Nw=='"&gt;
+
+          <!-- ... -->
+
+          <link href="/static/css/common.css" nonce="MRk2lpGYVUAZKE+91tA1Nw==">
+
+          <!-- ... -->
+
+          &lt;script src="/static/js/main.chunk.js" nonce="W3DRAPOiqqSLosEhvG59Ew==" /&gt;
+          &lt;script src="/static/js/0.chunk.js" nonce="WpYn/8AoeUea09mkJFkRrQ==" /&gt;
         </code></pre>
       </section>
       <section>
