@@ -84,35 +84,31 @@
       <section>
         <h3>Cross-Site Scripting (XSS)</h3>
         <ul>
-          <li><p>Injecting untrusted scripts into trusted web contents.</p></li>
-          <li><p>XSS attacks occur when an attacker uses a web application to send malicious code, generally in the form of a browser side script, to a different end user.</p></li>
-          <li><p>Usually caused by insufficient validation, sanitization or escaping of strings from untrusted sources.</p></li>
+          <li class="fragment"><p>Injecting untrusted scripts into trusted web contents.</p></li>
+          <li class="fragment"><p>XSS attacks occur when an attacker uses a web application to send malicious code, generally in the form of a browser side script, to a different end user.</p></li>
         </ul>
       </section>
       <section>
         <h3>Why Cross-Site Scripting attacks common?</h3>
-        <ul>
-          <li>
-            <p>XSS is easy to introduce</p>
-            <pre><code data-trim class="hljs">
-              eval(foo);
-              document.createElement('div').innerHTML='&lt;foo&gt;';
-              document.createElement('script').src='//foo';
-              document.createElement('div').innerHTML='&lt;foo&gt;';
-              document.createElement('a').insertAdjacentHTML(
-                'beforebegin', '&lt;foo&gt;');
-              new DOMParser().createFromString(
-                '&lt;foo&gt;', 'text/html');
-              window.open('//foo');
-            </code></pre>
-
-          </li>
-          <li>
-            <p>XSS is difficult to detect (by humans or static analysis)</p>
-            <pre><code data-trim class="hljs">
-              myElement[attr] = definitelyNotMalicious;
-            </code></pre>
-          </li>
+        <p>XSS is easy to introduce</p>
+        <pre><code data-trim class="hljs">
+          eval(foo);
+          document.createElement('div').innerHTML='&lt;foo&gt;';
+          document.createElement('script').src='//foo';
+          document.createElement('div').innerHTML='&lt;foo&gt;';
+          document.createElement('a').insertAdjacentHTML(
+            'beforebegin', '&lt;foo&gt;');
+          new DOMParser().createFromString(
+            '&lt;foo&gt;', 'text/html');
+          window.open('//foo');
+        </code></pre>
+      </section>
+      <section>
+        <h3>Why Cross-Site Scripting attacks common?</h3>
+        <p>XSS is difficult to detect for humans or via static analysis</p>
+        <pre><code data-trim class="hljs">
+          myElement[attr] = definitelyNotMalicious;
+        </code></pre>
       </section>
       <section>
         <h3>Types of Cross-Site Scripting attacks</h3>
