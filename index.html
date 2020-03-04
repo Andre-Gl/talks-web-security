@@ -141,24 +141,6 @@
         </footer>
       </section>
       <section>
-        <h3>Why do mitigations exisits</h3>
-        <p>Some frameworks and libraries has XSS vulnerability in their base.
-          They are impossible to fix and instead are mitigated by workarounds.</p>
-      </section>
-      <section>
-        <h3>Mitigation bypassess</h3>
-        <p>Mitigations do not fix the vulnerability.
-          They try to make the attacks harder instead.
-          The XSS is still there, it’s just presumably
-          harder to exploit it<sup>1</sup>.</p>
-        <footer>
-          <small>
-            <sup>1</sup>
-            <a href="https://www.owasp.org/images/3/32/OWASP_BeNeLux-Day_2017_Bypassing_XSS_mitigations_via_script_gadgets_Sebastian_Lekies.pdf">https://www.owasp.org/images/3/32/OWASP_BeNeLux-Day_2017_Bypassing_XSS_mitigations_via_script_gadgets_Sebastian_Lekies.pdf</a>
-          </small>
-        </footer>
-      </section>
-      <section>
         <h3>Examples of XSS out there</h3>
       </section>
       <section>
@@ -215,9 +197,10 @@
       </section>
       <section>
         <h3>Signal Desktop<sup>1</sup></h3>
-        <div>
-          <blockquote class="twitter-tweet"><p lang="en" dir="ltr">Remote zero-click JavaScript code execution on signal desktop message app. Thanks <a href="https://twitter.com/HacKanCuBa?ref_src=twsrc%5Etfw">@HacKanCuBa</a> and <a href="https://twitter.com/julianor?ref_src=twsrc%5Etfw">@julianor</a> <a href="https://t.co/YgT8akGfBI">pic.twitter.com/YgT8akGfBI</a></p>&mdash; Alfredo Ortega (@ortegaalfredo) <a href="https://twitter.com/ortegaalfredo/status/995017143002509313?ref_src=twsrc%5Etfw">May 11, 2018</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-        </div>
+        <blockquote>
+          Signal is a cross-platform encrypted messaging service developed by the Signal Foundation and Signal Messenger LLC.
+        </blockquote>
+        <a href="https://github.com/signalapp/Signal-Desktop">https://github.com/signalapp/Signal-Desktop</a>
         <footer>
           <small><sup>1*</sup><a href="https://signal.org/">https://signal.org/</a></small>
         </footer>
@@ -225,7 +208,9 @@
       <section>
         <h3>Signal Desktop</h3>
         <ul>
-          <li><p>0-click XSS in quoted reply messages leading to Session Hijacking.</p></li>
+          <li><p>
+            <sup>1</sup>
+            0-click XSS in quoted reply messages leading to Session Hijacking.</p></li>
           <li><p>In Electron application XSS becomes RCE.</p></li>
         </ul>
         <pre><code data-trim class="hljs">
@@ -236,6 +221,12 @@
             );
           }
         </code></pre>
+        <footer>
+          <small>
+            <sup>1</sup>
+            <a href="https://thehackerblog.com/i-too-like-to-live-dangerously-accidentally-finding-rce-in-signal-desktop-via-html-injection-in-quoted-replies/">https://thehackerblog.com/i-too-like-to-live-dangerously-accidentally-finding-rce-in-signal-desktop-via-html-injection-in-quoted-replies/</a>
+          </small>
+        </footer>
       </section>
       <section>
         <h4>Demo: links</h4>
@@ -617,39 +608,63 @@
         <h3>To read more</h3>
         <ul>
           <li><small>
-            <a href="https://owasp.org/www-project-top-ten/">OWASP Top Ten</a>
+            <p><a href="https://owasp.org/www-project-top-ten/">https://owasp.org/www-project-top-ten/</a></p>
+            <p>OWASP Top Ten</p>
           </small></li>
           <li><small>
-            <a href="http://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=WhatsApp">
-              Common Vulnerabilities and Exposures
-            </a>
-            <br />
-            by U.S. Department of Homeland Security
+            <p><a href="https://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=WhatsApp">
+              https://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=WhatsApp
+            </a></p>
+            <p>Common Vulnerabilities and Exposures
+              by U.S. Department of Homeland Security
+            </p>
           </small></li>
           <li><small>
-            <a href="https://www.facebook.com/threatexchange">
-              ThreatExchange
-            </a>
-            By Facebook
+            <p><a href="https://www.facebook.com/threatexchange">
+              https://www.facebook.com/threatexchange
+            </a></p>
+            <p>ThreatExchange By Facebook</p>
           </small></li>
           <li><small>
-            <a href="https://habr.com/ru/post/445932/">
-              Безопасность клиентских приложений: практические советы для Front-end разработчика
-            </a>
-            <br/>
-            by Alexander Rudenko
+            <p><a href="https://habr.com/ru/post/445932/">
+              https://habr.com/ru/post/445932/
+            </a></p>
+            <p>Безопасность клиентских приложений: практические советы для Front-end разработчика by Alexander Rudenko</p>
           </small></li>
           <li><small>
-            <a href="https://www.linkedin.com/pulse/even-faster-single-page-application-9security-sergei-iastrebov/">
-              Even Faster Single Page Application: 9.Security
-            </a>
-            <br/>
-            by Sergei Iastrebov
+            <p><a href="https://www.linkedin.com/pulse/even-faster-single-page-application-9security-sergei-iastrebov/">
+              https://www.linkedin.com/pulse/even-faster-single-page-application-9security-sergei-iastrebov/
+            </a></p>
+            <p>Even Faster Single Page Application: 9.Security by Sergei Iastrebov</p>
             </small>
           </small></li>
         </ul>
       </section>
-      <!-- <section>
+      <section>
+        <h3>Mitigation bypassess</h3>
+      </section>
+      <section>
+        <h3>Why do mitigations exisits</h3>
+        <p>Some frameworks and libraries has XSS vulnerability in their base.
+          They are impossible to fix and instead are mitigated by workarounds.</p>
+      </section>
+      <section>
+        <h3>Mitigation bypassess</h3>
+        <p>Mitigations do not fix the vulnerability.
+          They try to make the attacks harder instead.
+          The XSS is still there, it’s just presumably
+          harder to exploit it<sup>1</sup>.</p>
+        <footer>
+          <small>
+            <sup>1</sup>
+            <a href="https://www.owasp.org/images/3/32/OWASP_BeNeLux-Day_2017_Bypassing_XSS_mitigations_via_script_gadgets_Sebastian_Lekies.pdf">https://www.owasp.org/images/3/32/OWASP_BeNeLux-Day_2017_Bypassing_XSS_mitigations_via_script_gadgets_Sebastian_Lekies.pdf</a>
+          </small>
+        </footer>
+      </section>
+      <section>
+        <h3>WhatsApp perspective</h3>
+      </section>
+      <section>
         <h3>WhatsApp perspective</h3>
         <p>Traditionally user generated content has quite a few stops before it reaches other participants.</p>
         <img src="./img/way-bw.png" height="400" class="icon" alt="Message way">
@@ -658,7 +673,7 @@
         <h3>WhatsApp perspective</h3>
         <p>In WhatsApp world user generated content has only 2 stops.</p>
         <img src="./img/alice-bob-inv.png" height="400" class="icon" alt="Alice and Bob">
-      </section> -->
+      </section>
     </div>
   </div>
 
