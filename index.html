@@ -68,12 +68,12 @@
       </section> -->
       <section>
         <h3>Where'er the threats?</h3>
-        <p>We as users want content and services online 24/7.</p>
+        <p>We as consumers want content and services online 24/7.</p>
         <ul>
-          <li>Banking</li>
-          <li>Health information</li>
-          <li>Travel plans and tickets</li>
-          <li>Communication with loved ones or business</li>
+          <li class="fragment">Banking</li>
+          <li class="fragment">Health information</li class="fragment">
+          <li class="fragment">Travel plans and tickets</li>
+          <li class="fragment">Communication with loved ones or business</li class="fragment">
         </ul>
       </section>
 
@@ -135,7 +135,7 @@
         </ul>
         <footer>
           <small>
-            <sup>1*</sup>
+            <sup>1</sup>
             <a href="https://github.com/google/security-research-pocs/blob/master/script-gadgets/bypasses.md">https://github.com/google/security-research-pocs/blob/master/script-gadgets/bypasses.md</a>
           </small>
         </footer>
@@ -264,7 +264,7 @@
         <ul>
           <li><p>
             <sup>1</sup>
-            1-Click stored XSS on WhatsApp Web leading to Session Hijacking</p>
+            1-Click stored XSS on WhatsApp Web leading to Session Hijacking.</p>
           </li>
           <li><p>In Electron application XSS becomes RCE.</p></li>
         </ul>
@@ -306,6 +306,20 @@
           </li>
         </ul>
       </section>
+      <!-- <section>
+        <h3>Links target<sup>1</sup></h3>
+        <p>If you are using <code class="inline-code">target="_blank"</code></p>
+        <pre class="fragment"><code data-trim class="hljs">
+          // New window can do
+          window.opener.location = 'https://fakewebsite/facebook.com/';
+        </code></pre>
+        <footer>
+          <small>
+            <sup>1</sup>
+            <a href="https://www.jitbit.com/alexblog/256-targetblank---the-most-underestimated-vulnerability-ever/">https://www.jitbit.com/alexblog/256-targetblank---the-most-underestimated-vulnerability-ever/</a>
+          </small>
+        </footer>
+      </section> -->
       <section>
         <h3>XSS to Electron RCE</h3>
         <img src="./img/electron-inv.png" class="icon" alt="Electron">
@@ -313,14 +327,13 @@
       <section>
         <h3>Demo: Node Integration and Context</h3>
         <ul>
-          <li><p>
+          <li class="fragment"><p>
             <sup>1</sup>
             <code class="inline-code">nodeIntegration</code> when ON exposes Node.js APIs & modules to renderer
           </p></li>
-          <li><p>
+          <li class="fragment"><p>
             <sup>2</sup>
             <code class="inline-code">contextIsolation</code> when OFF allows preload script and renderer in the same JavaScript context
-            <p>Allows prototype pollution attacks</p>
           </p></li>
         </ul>
         <footer>
@@ -336,13 +349,13 @@
       </section>
       <section>
         <h3>Demo: Node Integration and Context</h3>
-        <p><code class="inline-code">nodeIntegration</code> enabled</p>
-        <pre><code data-trim class="hljs">
+        <p class="fragment"><code class="inline-code">nodeIntegration</code> enabled</p>
+        <pre class="fragment"><code data-trim class="hljs">
           require('child_process')
             .execSync('/Applications/Calculator.app');
         </code></pre>
-        <p><code class="inline-code">nodeIntegration</code> disabled but process is exposed</p>
-        <pre><code data-trim class="hljs">
+        <p class="fragment"><code class="inline-code">nodeIntegration</code> disabled but process is exposed</p>
+        <pre class="fragment"><code data-trim class="hljs">
           process.mainModule.require('child_process')
             .execSync('/Applications/Calculator.app');
         </code></pre>
@@ -384,24 +397,14 @@
           }
         </code></pre>
       </section>
-      <section>
-        <h3>Links target<sup>1</sup></h3>
-        <p>If you are using <code class="inline-code">target="_blank"</code></p>
-        <pre class="fragment"><code data-trim class="hljs">
-          // New window can do
-          window.opener.location = 'https://fakewebsite/facebook.com/';
-        </code></pre>
-        <pre class="fragment"><code data-trim class="hljs">
-          &lt;-- Mitigate opener --&gt;
+      <!-- <section>
+        <h3>Links target</h3>
+        <p>If you are using <code class="inline-code">target="_blank"</code> make sure you hide opener</p>
+        <pre><code data-trim class="hljs">
+          &lt;-- Hide opener --&gt;
           &lt;a href="..." rel="noopener" &gt;...&lt;a&gt;
         </code></pre>
-        <footer>
-          <small>
-            <sup>1</sup>
-            <a href="https://www.jitbit.com/alexblog/256-targetblank---the-most-underestimated-vulnerability-ever/">https://www.jitbit.com/alexblog/256-targetblank---the-most-underestimated-vulnerability-ever/</a>
-          </small>
-        </footer>
-      </section>
+      </section> -->
       <section>
         <h3>Electron Context Bridge<sup>1</sup></h3>
         <pre><code data-trim class="hljs">
@@ -415,7 +418,7 @@
           );
         </code></pre>
         <pre><code data-trim class="hljs">
-          // Page
+          // Guest Page
           window.electron.doThing();
         </code></pre>
         <footer>
@@ -443,7 +446,7 @@
             Prevent (malicious) script execution
             <ul>
               <li><p>
-                Disables inline <code class="inline-code">&lt;script&gt;</code> elems by default, prevents <code class="inline-code">eval()</code> in JS
+                Disables inline <code class="inline-code">&lt;script&gt;</code> elements by default, prevents <code class="inline-code">eval()</code> in JS
               </p></li>
               <li><p>
                 hash / nonce based authentication for trusted scripts
@@ -482,10 +485,10 @@
       <section>
         <h3>CSP: Script Nonce</h3>
         <pre><code data-trim class="hljs">
-          &lt;script src="/*...*/" nonce="{hash}" /&gt;
+          Content-Security-Policy: script-src nоnce-{hash};
         </code></pre>
         <pre><code data-trim class="hljs">
-          Content-Security-Policy: script-src nоnce-${hash};
+          &lt;script src="/*...*/" nonce="{hash}" /&gt;
         </code></pre>
       </section>
       <section>
