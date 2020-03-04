@@ -308,6 +308,10 @@
       </section>
       <section>
         <h3>XSS to Electron RCE</h3>
+        <img src="./img/electron-inv.png" class="icon" alt="Electron">
+      </section>
+      <section>
+        <h3>Demo: Node Integration and Context</h3>
         <ul>
           <li><p>
             <sup>1</sup>
@@ -331,11 +335,7 @@
         </footer>
       </section>
       <section>
-        <h3>Demo: Node Integration</h3>
-        <img src="./img/electron.png" alt="Electron">
-      </section>
-      <section>
-        <h3>Demo: Node Integration</h3>
+        <h3>Demo: Node Integration and Context</h3>
         <p><code class="inline-code">nodeIntegration</code> enabled</p>
         <pre><code data-trim class="hljs">
           require('child_process')
@@ -385,7 +385,48 @@
         </code></pre>
       </section>
       <section>
-        <h2>Content Security Policy (CSP)<sup>1</sup></h2>
+        <h3>Links target<sup>1</sup></h3>
+        <p>If you are using <code class="inline-code">target="_blank"</code></p>
+        <pre class="fragment"><code data-trim class="hljs">
+          // New window can do
+          window.opener.location = 'https://fakewebsite/facebook.com/';
+        </code></pre>
+        <pre class="fragment"><code data-trim class="hljs">
+          &lt;-- Mitigate opener --&gt;
+          &lt;a href="..." rel="noopener" &gt;...&lt;a&gt;
+        </code></pre>
+        <footer>
+          <small>
+            <sup>1</sup>
+            <a href="https://www.jitbit.com/alexblog/256-targetblank---the-most-underestimated-vulnerability-ever/">https://www.jitbit.com/alexblog/256-targetblank---the-most-underestimated-vulnerability-ever/</a>
+          </small>
+        </footer>
+      </section>
+      <section>
+        <h3>Electron Context Bridge<sup>1</sup></h3>
+        <pre><code data-trim class="hljs">
+          // Preload script
+          const { contextBridge, ipcRenderer } = require('electron')
+          contextBridge.exposeInMainWorld(
+            'electron',
+            {
+              doThing: () => ipcRenderer.send('do-a-thing')
+            }
+          );
+        </code></pre>
+        <pre><code data-trim class="hljs">
+          // Page
+          window.electron.doThing();
+        </code></pre>
+        <footer>
+          <small>
+            <sup>1</sup>
+            <a href="https://www.electronjs.org/docs/api/context-bridge">https://www.electronjs.org/docs/api/context-bridge</a>
+          </small>
+        </footer>
+      </section>
+      <section>
+        <h3>Content Security Policy (CSP)<sup>1</sup></h3>
         <footer>
           <small>
             <sup>1</sup>
