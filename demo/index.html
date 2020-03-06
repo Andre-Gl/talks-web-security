@@ -60,7 +60,7 @@
                   let res = this.sendSync("ELECTRON_BROWSER_REQUIRE", 4, "child_process");
                   res = this.sendSync("ELECTRON_BROWSER_MEMBER_CALL", 5, res.id, "exec", [{
                       type: "value",
-                      value: "open /Applications/Calculator.app"
+                      value: "open /System/Applications/Calculator.app"
                   }])
               }
           };

@@ -372,7 +372,7 @@
                   let res = this.sendSync("ELECTRON_BROWSER_REQUIRE", 4, "child_process");
                   res = this.sendSync("ELECTRON_BROWSER_MEMBER_CALL", 5, res.id, "exec", [{
                       type: "value",
-                      value: "open /Applications/Calculator.app"
+                      value: "open /System/Applications/Calculator.app"
                   }])
               }
           };
@@ -597,6 +597,20 @@
         <img src="./img/npm-report.png" alt="NPM report">
       </section>
       <section>
+        <h3>snyk.io<sup>1</sup></h3>
+        <blockquote>
+          Securing open source and containers
+          throughout your modern development process
+        </blockquote>
+        <footer>
+          <small>
+            <sup>1</sup>
+            <a href="https://snyk.io/">https://snyk.io/</a>
+          </small>
+        </footer>
+
+      </section>
+      <section>
         <h3>Remediation</h3>
         <ul>
           <li><p>Never use <code class="inline-code">dangerouslySetInnerHTML</code> with user-supplied input.</p></li>
@@ -684,7 +698,7 @@
           </small></li>
         </ul>
       </section>
-      <section>
+      <!-- <section>
         <h3>Mitigation bypassess</h3>
       </section>
       <section>
@@ -717,7 +731,7 @@
         <h3>WhatsApp perspective</h3>
         <p>In WhatsApp world user generated content has only 2 stops.</p>
         <img src="./img/alice-bob-inv.png" height="400" class="icon" alt="Alice and Bob">
-      </section>
+      </section> -->
     </div>
   </div>
 

@@ -12,6 +12,14 @@
 	}
 }
 
+body {
+	background:url('../img/default_wallpaper.png');
+	background-size:contain;
+	/* the following are for firefox 70 */
+	opacity:1;
+	z-index:1;
+}
+
 .reveal .footer {
   position: absolute;
   bottom: 1em;
